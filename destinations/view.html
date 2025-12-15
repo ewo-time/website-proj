@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="View destination details">
+    <title>Destination Details — Voyage en Route</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Leaflet for Maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    
+    <style>
+      /* Fixed carousel image resolution with better presentation */
+      #destinationCarousel {
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        margin-bottom: 2rem;
+      }
+      
+      #destinationCarousel .carousel-inner {
+        height: 500px;
+        border-radius: 15px;
+      }
+      
+      #destinationCarousel .carousel-item {
+        height: 500px;
+      }
+      
+      #destinationCarousel .carousel-item img {
+        height: 500px;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 15px;
+      }
+      
+      /* Smoother carousel controls */
+      #destinationCarousel .carousel-control-prev,
+      #destinationCarousel .carousel-control-next {
+        width: 50px;
+        opacity: 0.7;
+        transition: opacity 0.3s ease;
+      }
+      
+      #destinationCarousel .carousel-control-prev:hover,
+      #destinationCarousel .carousel-control-next:hover {
+        opacity: 1;
+      }
+      
+      /* Better indicators */
+      #destinationCarousel .carousel-indicators [data-bs-target] {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin: 0 5px;
+        background-color: rgba(255,255,255,0.7);
+        border: 2px solid rgba(255,255,255,0.9);
+      }
+      
+      #destinationCarousel .carousel-indicators .active {
+        background-color: #fff;
+        transform: scale(1.1);
+      }
+      
+      /* Leaflet Map Styling */
+      #map {
+        height: 300px;
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        margin-bottom: 1rem;
+      }
+      
+      .leaflet-popup-content-wrapper {
+        border-radius: 8px;
+      }
+      
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        #destinationCarousel .carousel-inner,
+        #destinationCarousel .carousel-item,
+        #destinationCarousel .carousel-item img {
+          height: 300px;
+        }
+        
+        #destinationCarousel {
+          border-radius: 10px;
+        }
+        
+        #map {
+          height: 250px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sticky Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold fs-4" href="../home.html">
+          <i class="fas fa-plane-departure text-primary me-2"></i>Voyage en Route
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="../home.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="index.html">Destinations</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../bookings/create.html">Book / Inquiry</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../bookings/check.html">Check Booking</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../home.html#about">About</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="container mt-3">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="../home.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Destinations</a></li>
+          <li class="breadcrumb-item active" aria-current="page" id="breadcrumb-title">Loading...</li>
+        </ol>
+      </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container my-5">
+      <div class="row">
+        <!-- Left Column: Images and Details -->
+        <div class="col-lg-8">
+          <!-- Image Carousel -->
+          <div id="destinationCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#destinationCarousel" data-bs-slide-to="0" class="active"></button>
+              <button type="button" data-bs-target="#destinationCarousel" data-bs-slide-to="1"></button>
+            </div>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="../assets/images/santorini.jpg" class="d-block w-100 rounded" alt="Destination" id="heroImage">
+              </div>
+              <div class="carousel-item">
+                <img src="../assets/images/hero-bg.jpg" class="d-block w-100 rounded" alt="Destination">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#destinationCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#destinationCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
+          </div>
+
+          <!-- these are just default code that may load if there's no destination data. -->
+          <h1 class="display-5 fw-bold mb-2" id="destTitle">Destination Name</h1>
+          <p class="text-muted mb-4" id="destLocation">
+            <i class="fas fa-map-marker-alt me-2"></i>City, Country
+          </p>
+
+          <div class="card mb-4">
+            <div class="card-body">
+              <h4 class="card-title">Know more about this destination</h4>
+              <p class="card-text" id="destDescription">
+                Description will be loaded here...
+              </p>
+            </div>
+          </div>
+
+          <div class="card mb-4">
+            <div class="card-body">
+              <h4 class="card-title">Here's some activities you can do</h4>
+              <ul id="destActivities">
+                <li>Guided tours</li>
+                <li>Local cuisine experiences</li>
+                <li>Photography spots</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Map and Booking -->
+        <div class="col-lg-4">
+          <div class="card sticky-top" style="top: 80px;">
+            <div class="card-body">
+                <h5 class="card-title mb-3">Location on the map</h5>
+              <div id="map" class="destination-map mb-3"></div>
+
+
+              <h5 class="card-title md-4">Weather for today</h5>
+              <div id="weatherInfo" class="mb-4">
+                <div class="text-center">
+                    <div class="spinner-border-sm text-primary" role="status">
+                        <span class="visually-hidden">Please wait..</span>
+                    </div>
+                    <p class="small text-muted mb-0">Weather is loading...</p>
+                </div>
+              </div>
+              
+              <h5 class="card-title mt-4">Plan your visit</h5>
+              <p class="small text-muted">Ready to explore this destination?</p>
+              <a href="../bookings/create.html" class="btn btn-primary w-100 mb-2">
+                <i class="fas fa-calendar-check me-2"></i>Interested? Book here!
+              </a>
+              <a href="index.html" class="btn btn-outline-secondary w-100">
+                <i class="fas fa-arrow-left me-2"></i>Return to destinations
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4" id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 mb-3 mb-md-0">
+            <h5 class="fw-bold">
+              <i class="fas fa-plane-departure me-2"></i>Voyage en Route
+            </h5>
+            <p class="small text-white-50">Your trusted guide to exploring Europe and the Middle East. Discover, plan, and book unforgettable experiences.</p>
+          </div>
+          <div class="col-md-3 mb-3 mb-md-0">
+            <h6 class="fw-bold">Quick Links</h6>
+            <ul class="list-unstyled small">
+              <li><a href="destinations/index.html" class="text-white-50 text-decoration-none">Destinations</a></li>
+              <li><a href="bookings/create.html" class="text-white-50 text-decoration-none">Book Now</a></li>
+              <li><a href="../home.html#about" class="text-white-50 text-decoration-none">About Us</a></li>
+              <li><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+            </ul>
+          </div>
+          <div class="col-md-3">
+            <h6 class="fw-bold">Follow Us</h6>
+            <div class="d-flex gap-2">
+              <a href="#" class="text-white-50" aria-label="Facebook"><i class="fab fa-facebook fa-lg"></i></a>
+              <a href="#" class="text-white-50" aria-label="Instagram"><i class="fab fa-instagram fa-lg"></i></a>
+              <a href="#" class="text-white-50" aria-label="Twitter"><i class="fab fa-twitter fa-lg"></i></a>
+            </div>
+          </div>
+        </div>
+        <hr class="bg-white-50 my-3">
+        <div class="text-center small text-white-50">
+          &copy; 2025 Voyage en Route — Travel Guide. All rights reserved.
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="../assets/js/frontend.js"></script>
+
+    <script>
+        // Destination-specific data
+        const destinationData = {
+          'santorini': {
+            name: 'Santorini', city: 'Santorini', country: 'Greece',
+            description: 'Santorini is famous for its dramatic views, stunning sunsets, white-washed villages perched on cliffs, and unique volcanic beaches. The island offers a perfect blend of natural beauty, rich history, and Mediterranean charm.',
+            activities: ['Watch the sunset in Oia', 'Visit ancient Akrotiri ruins', 'Wine tasting at local vineyards', 'Explore volcanic beaches (Red Beach, Black Beach)', 'Sail around the caldera'],
+            images: [
+              'https://plus.unsplash.com/premium_photo-1661964149725-fbf14eabd38c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA==',
+              'https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1533105079780-92b9be482077?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1530841377377-3ff06c0ca713?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHNhbnRvcmluaXxlbnwwfHwwfHx8MA%3D%3D'
+            ],
+            lat: 36.3932, lon: 25.4615
+          },
+          'petra': {
+            name: 'Petra', city: 'Wadi Musa', country: 'Jordan',
+            description: 'Petra is an archaeological marvel, an ancient Nabatean city carved into rose-red rock faces. A UNESCO World Heritage Site and one of the New Seven Wonders of the World, it features intricate facades, tombs, and temples dating back over 2,000 years.',
+            activities: ['Walk through the Siq canyon', 'Visit the Treasury (Al-Khazneh)', 'Hike to the Monastery', 'Explore the Royal Tombs', 'Experience Petra by Night'],
+            images: [
+              '../assets/images/petra.jpg',
+              'https://images.unsplash.com/photo-1606210122158-eeb10e0823bf?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHBldHJhfGVufDB8fDB8fHww',
+              'https://images.unsplash.com/photo-1579606032821-4e6161c81bd3?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1530624852-9beb898b2820?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHBldHJhfGVufDB8fDB8fHww',
+              'https://images.unsplash.com/photo-1720127174297-f6c6038b04ba?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fHBldHJhfGVufDB8fDB8fHww'
+            ],
+            lat: 30.3285, lon: 35.4444
+          },
+          'rome': {
+            name: 'Rome', city: 'Rome', country: 'Italy',
+            description: 'Rome is a living museum where ancient ruins stand alongside Renaissance masterpieces. From the Colosseum to the Vatican, every corner tells a story spanning over 2,500 years of history, art, and culture.',
+            activities: ['Tour the Colosseum and Roman Forum', 'Visit Vatican City and Sistine Chapel', 'Throw a coin in Trevi Fountain', 'Explore the Pantheon', 'Enjoy authentic Italian cuisine in Trastevere'],
+            images: [
+              '../assets/images/rome.jpg',
+              'https://images.unsplash.com/photo-1598258500419-5d7895465a20?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHJvbWV8ZW58MHx8MHx8fDA%3D',
+              'https://images.unsplash.com/photo-1525874684015-58379d421a52?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1531572753322-ad063cecc140?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?w=900&auto=format&fit=crop'
+            ],
+            lat: 41.9028, lon: 12.4964
+          },
+          'paris': {
+            name: 'Paris', city: 'Paris', country: 'France',
+            description: 'Paris captivates with its iconic landmarks, world-class museums, charming cafés, and elegant boulevards. From the Eiffel Tower to the Louvre, the city offers endless cultural treasures and unforgettable experiences.',
+            activities: ['Climb the Eiffel Tower', 'Explore the Louvre Museum', 'Stroll along the Champs-Élysées', 'Visit Notre-Dame Cathedral', 'Cruise the Seine River'],
+            images: [
+              'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1549144511-f099e773c147?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1431274172761-fca41d930114?w=900&auto=format&fit=crop'
+            ],
+            lat: 48.8566, lon: 2.3522
+          },
+          'dubai': {
+            name: 'Dubai', city: 'Dubai', country: 'UAE',
+            description: 'Dubai is a city of superlatives - the tallest building, largest mall, and most luxurious hotels. Experience cutting-edge architecture, pristine beaches, desert adventures, and a vibrant multicultural atmosphere.',
+            activities: ['Visit Burj Khalifa observation deck', 'Shop at Dubai Mall and Gold Souk', 'Desert safari with dune bashing', 'Relax at Jumeirah Beach', 'Explore traditional Dubai Creek'],
+            images: [
+              'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1518684079-3c830dcef090?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1528702748617-c64d49f918af?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGR1YmFpfGVufDB8fDB8fHww',
+              'https://images.unsplash.com/photo-1582672060674-bc2bd808a8b5?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1546412414-e1885259563a?w=900&auto=format&fit=crop'
+            ],
+            lat: 25.2048, lon: 55.2708
+          },
+          'barcelona': {
+            name: 'Barcelona', city: 'Barcelona', country: 'Spain',
+            description: 'Barcelona combines stunning modernist architecture, Mediterranean beaches, vibrant street life, and rich Catalan culture. Gaudí\'s masterpieces like Sagrada Familia define the city\'s unique artistic character.',
+            activities: ['Tour Sagrada Familia basilica', 'Stroll through Park Güell', 'Walk Las Ramblas boulevard', 'Visit Gothic Quarter', 'Relax at Barceloneta Beach'],
+            images: [
+              'https://images.unsplash.com/photo-1583422409516-2895a77efded?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1562883676-8c7feb83f09b?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1579282240050-352db0a14c21?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1610213989414-acc5773ba2c6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGJhcmNlbG9uYXxlbnwwfHwwfHx8MA%3D%3D',
+              'https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?w=900&auto=format&fit=crop'
+            ],
+            lat: 41.3851, lon: 2.1734
+          },
+          'istanbul': {
+            name: 'Istanbul', city: 'Istanbul', country: 'Turkey',
+            description: 'Istanbul straddles two continents, blending European and Asian cultures. Historic mosques, bustling bazaars, Bosphorus cruises, and rich Ottoman heritage create an unforgettable cultural tapestry.',
+            activities: ['Visit Hagia Sophia and Blue Mosque', 'Shop at Grand Bazaar', 'Cruise the Bosphorus Strait', 'Explore Topkapi Palace', 'Experience Turkish baths (hammam)'],
+            images: [
+              'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1527838832700-5059252407fa?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1623613229313-5e59f698526f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGlzdGFuYnVsfGVufDB8fDB8fHww',
+              'https://images.unsplash.com/photo-1629649456013-88519a031d64?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGlzdGFuYnVsfGVufDB8fDB8fHww'
+            ],
+            lat: 41.0082, lon: 28.9784
+          },
+          'athens': {
+            name: 'Athens', city: 'Athens', country: 'Greece',
+            description: 'Athens is where democracy was born and philosophy flourished. Ancient temples crown hilltops while lively neighborhoods buzz with modern Greek life, creating a fascinating blend of old and new.',
+            activities: ['Explore the Acropolis and Parthenon', 'Visit Ancient Agora', 'Discover Acropolis Museum', 'Wander Plaka neighborhood', 'Climb Lycabettus Hill for sunset'],
+            images: [
+              'https://images.unsplash.com/photo-1605707141131-aa742dcf4671?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1555993539-1732b0258235?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1603565816030-6b389eeb23cb?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1635672097594-a0cbb7aa3a9e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGF0aGVuc3xlbnwwfHwwfHx8MA%3D%3D',
+              'https://images.unsplash.com/photo-1602769247692-126fdf1f1da6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YXRoZW5zfGVufDB8fDB8fHww'
+            ],
+            lat: 37.9838, lon: 23.7275
+          },
+          'venice': {
+            name: 'Venice', city: 'Venice', country: 'Italy',
+            description: 'Venice is a unique car-free city built on water, famous for its romantic canals, stunning architecture, world-class art, and timeless beauty. Gothic palaces and Byzantine churches line winding waterways.',
+            activities: ['Gondola ride through canals', 'Visit St. Mark\'s Basilica', 'Explore Doge\'s Palace', 'Walk across Rialto Bridge', 'Discover Murano glass workshops'],
+            images: [
+              'https://images.unsplash.com/photo-1523906921802-b5d2d899e93b?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1514890547357-a9ee288728e0?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1519112232436-9923c6ba3d26?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8dmVuaWNlfGVufDB8fDB8fHww',
+              'https://images.unsplash.com/photo-1511135570219-bbad9a02f103?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHZlbmljZXxlbnwwfHwwfHx8MA%3D%3D',
+              'https://plus.unsplash.com/premium_photo-1690494028558-a6f535911993?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+            ],
+            lat: 45.4408, lon: 12.3155
+          },
+          'dubrovnik': {
+            name: 'Dubrovnik', city: 'Dubrovnik', country: 'Croatia',
+            description: 'Dubrovnik enchants with its perfectly preserved medieval walls, terracotta roofs, and crystal-clear Adriatic waters. This UNESCO World Heritage city offers stunning coastal views and rich maritime history.',
+            activities: ['Walk the ancient city walls', 'Stroll Stradun main street', 'Take cable car to Mount Srđ', 'Kayak to Lokrum Island', 'Visit Fort Lovrijenac'],
+            images: [
+              'https://images.unsplash.com/photo-1414862625453-d87604a607e4?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1565481093319-86a3ddd1cf87?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGR1YnJvdm5pa3xlbnwwfHwwfHx8MA%3D%3D',
+              'https://images.unsplash.com/photo-1565784623727-8cebf4712b2d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8ZHVicm92bmlrfGVufDB8fDB8fHww',
+              'https://images.unsplash.com/photo-1609137144813-7d9921338f24?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1603551664565-1b3c3dd61075?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8ZHVicm92bmlrfGVufDB8fDB8fHww'
+            ],
+            lat: 42.6507, lon: 18.0944
+          },
+          'jerusalem': {
+            name: 'Jerusalem', city: 'Jerusalem', country: 'Israel',
+            description: 'Jerusalem is one of the world\'s oldest and most sacred cities, holy to Judaism, Christianity, and Islam. Its ancient walls contain millennia of history, religious sites, and diverse cultural heritage.',
+            activities: ['Visit Western Wall (Wailing Wall)', 'Explore Church of the Holy Sepulchre', 'Walk Via Dolorosa', 'Tour Dome of the Rock', 'Discover Old City quarters'],
+            images: [
+              'https://images.unsplash.com/photo-1614517453351-6c1522fc7a56?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1586486942853-511cfe2c6313?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGplcnVzYWxlbXxlbnwwfHwwfHx8MA%3D%3D',
+              'https://images.unsplash.com/photo-1526139255915-ace9e78d8fb6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGplcnVzYWxlbXxlbnwwfHwwfHx8MA%3D%3D',
+              'https://images.unsplash.com/photo-1466175743059-5393a020726c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8amVydXNhbGVtfGVufDB8fDB8fHww',
+              'https://plus.unsplash.com/premium_photo-1697730130972-627b46998282?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8amVydXNhbGVtfGVufDB8fDB8fHww'
+            ],
+            lat: 31.7683, lon: 35.2137
+          },
+          'cappadocia': {
+            name: 'Cappadocia', city: 'Göreme', country: 'Turkey',
+            description: 'Cappadocia\'s surreal landscape features unique rock formations, ancient cave dwellings, underground cities, and hundreds of colorful hot air balloons floating at sunrise over an otherworldly terrain.',
+            activities: ['Hot air balloon ride at sunrise', 'Explore underground cities', 'Visit Göreme Open-Air Museum', 'Stay in cave hotels', 'Hike through Rose Valley'],
+            images: [
+              'https://images.unsplash.com/photo-1627933577672-d191b77baa9c?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?w=900&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1565694286329-16c31ae20a20?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGNhcHBhZG9jaWF8ZW58MHx8MHx8fDA%3D',
+              'https://images.unsplash.com/photo-1631724533937-687e6e60aafe?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGNhcHBhZG9jaWF8ZW58MHx8MHx8fDA%3D',
+              'https://plus.unsplash.com/premium_photo-1663012996416-c85e55a67e78?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGNhcHBhZG9jaWF8ZW58MHx8MHx8fDA%3D'
+            ],
+            lat: 38.6431, lon: 34.8289
+          }
+        };
+
+        // Weather API
+        const WEATHER_API_KEY = '43f7a1b06ef44fa791b85624251512';
+        const WEATHER_API_URL = 'https://api.weatherapi.com/v1/current.json';
+      
+        // Get destination slug from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const slug = urlParams.get('slug') || 'santorini';
+        
+        // Load destination page content
+        function loadDestinationContent(slug) {
+          const destination = destinationData[slug];
+          
+          if (!destination) {
+            document.getElementById('destTitle').textContent = 'Destination not found';
+            return;
+          }
+          
+          // Update page content
+          document.getElementById('destTitle').textContent = destination.name;
+          document.getElementById('breadcrumb-title').textContent = destination.name;
+          document.getElementById('destLocation').innerHTML = `<i class="fas fa-map-marker-alt me-2"></i>${destination.city}, ${destination.country}`;
+          document.getElementById('destDescription').textContent = destination.description;
+          
+          // Update activities list
+          const activitiesList = document.getElementById('destActivities');
+          activitiesList.innerHTML = destination.activities.map(activity => `<li>${activity}</li>`).join('');
+          
+          // Update booking link
+          const bookingLink = document.querySelector('a[href*="bookings"]');
+          if (bookingLink) {
+            bookingLink.href = `../bookings/create.html?destination=${slug}`;
+          }
+          
+          // Load carousel images
+          loadCarouselImages(destination.images, destination.name);
+          
+          // Initialize map and fetch weather
+          initMap(destination.lat, destination.lon, destination.name);
+          fetchWeather(destination.lat, destination.lon);
+        }
+        
+        // Load multiple images into carousel
+        function loadCarouselImages(images, destName) {
+          const carouselIndicators = document.querySelector('.carousel-indicators');
+          const carouselInner = document.querySelector('.carousel-inner');
+          
+          // Clear existing content
+          carouselIndicators.innerHTML = '';
+          carouselInner.innerHTML = '';
+          
+          // Generate indicators and slides
+          images.forEach((imageUrl, index) => {
+            // Create indicator
+            const indicator = document.createElement('button');
+            indicator.type = 'button';
+            indicator.setAttribute('data-bs-target', '#destinationCarousel');
+            indicator.setAttribute('data-bs-slide-to', index);
+            if (index === 0) indicator.classList.add('active');
+            carouselIndicators.appendChild(indicator);
+            
+            // Create slide
+            const slide = document.createElement('div');
+            slide.className = 'carousel-item' + (index === 0 ? ' active' : '');
+            slide.innerHTML = `<img src="${imageUrl}" class="d-block w-100 rounded" alt="${destName} - Image ${index + 1}">`;
+            carouselInner.appendChild(slide);
+          });
+        }
+        
+        // Initialize Leaflet map
+        function initMap(lat, lon, name) {
+          const map = L.map('map').setView([lat, lon], 13);
+          
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+          }).addTo(map);
+          
+          L.marker([lat, lon]).addTo(map)
+            .bindPopup(`<b>${name}</b>`)
+            .openPopup();
+        }
+        
+        // Fetch weather data
+        async function fetchWeather(lat, lon) {
+          const weatherContainer = document.getElementById('weatherInfo');
+          
+          try {
+            const response = await fetch(`${WEATHER_API_URL}?key=${WEATHER_API_KEY}&q=${lat},${lon}&aqi=no`);
+            
+            if (!response.ok) throw new Error('Weather data unavailable');
+            
+            const data = await response.json();
+            const { temp_c, condition, humidity, wind_kph } = data.current;
+            
+            weatherContainer.innerHTML = `
+              <div class="d-flex align-items-center justify-content-between">
+                <div>
+                  <img src="${condition.icon}" alt="${condition.text}" width="64">
+                </div>
+                <div class="text-end">
+                  <h3 class="mb-0">${Math.round(temp_c)}°C</h3>
+                  <p class="mb-0 small text-muted">${condition.text}</p>
+                </div>
+              </div>
+              <hr class="my-2">
+              <div class="row g-2 small">
+                <div class="col-6">
+                  <i class="fas fa-tint text-primary me-1"></i>
+                  Humidity: ${humidity}%
+                </div>
+                <div class="col-6">
+                  <i class="fas fa-wind text-primary me-1"></i>
+                  Wind: ${Math.round(wind_kph)} km/h
+                </div>
+              </div>
+            `;
+          } catch (error) {
+            console.error('Weather fetch error:', error);
+            weatherContainer.innerHTML = `
+              <p class="small text-danger">
+                <i class="fas fa-exclamation-circle me-1"></i>
+                Unable to load weather data
+              </p>
+            `;
+          }
+        }
+        
+        // Load page when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+          loadDestinationContent(slug);
+        });
+    </script>
+    
+  </body>
+</html>
+  

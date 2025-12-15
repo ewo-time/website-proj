@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Browse destinations across Europe and the Middle East.">
+    <title>Destinations — Voyage en Route</title>
+
+    <!-- fonts from google, i'm using this bcos why not -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- font awesome, bcos ig it's awesome? -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- bootstrap duh -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- styles.css for cooler things -->
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+
+<body>
+    <!-- oh this is the header!! -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4" href="../home.html">
+                <i class="fas fa-plane-departure text-primary me-2"></i>Voyage en Route
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../home.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="index.html">Destinations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../bookings/create.html">Book / Inquiry</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../bookings/check.html">Check Booking</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../home.html#about">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- wait nvm this is the header -->
+    <header class="bg-light py-5">
+        <div class="container">
+            <h1 class="display-5 fw-bold mb-2">Destinations</h1>
+            <p class="lead text-muted">Discover amazing places across Europe and the Middle East</p>
+        </div>
+    </header>
+
+    <!-- main page -->
+    <main class="container my-5">
+        <!-- search/filter your destinations -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="input-group">
+                    <input type="search" id="searchInput" class="form-control"
+                        placeholder="Search destinations by name, city, or country...">
+                    <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <select class="form-select" id="regionFilter">
+                    <option value="all">All Regions</option>
+                    <option value="europe">Europe</option>
+                    <option value="middleeast">Middle East</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- destination grid? -->
+        <div class="row g-4" id="destinationsGrid">
+            <div class="col-sm-6 col-md-4" data-region="europe">
+                <article class="card h-100 destination-card">
+                    <img src="https://plus.unsplash.com/premium_photo-1661964149725-fbf14eabd38c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img-top" alt="Santorini">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title mb-0">Santorini, Greece</h5>
+                            <span class="badge bg-primary">Europe</span>
+                        </div>
+
+                        <p class="card-text text-muted small mb-2">
+                            <i class="fas fa-map-marker-alt me-1"></i>Santorini, Greece
+                        </p>
+
+                        <p class="card-text flex-grow-1">White-washed villages and stunning caldera views.</p>
+                        <div class="mt-auto">
+                            <a href="view.html?slug=santorini" class="btn btn-outline-primary btn-sm w-100">
+                                View Details
+                                <i class="fas fa-chevron-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col-sm-6 col-md-4" data-region="middleeast">
+                <article class="card h-100 destination-card">
+                    <img src="../assets/images/petra.jpg" class="card-img-top" alt="Petra ancient treasury">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title mb-0">Petra, Jordan</h5>
+                            <span class="badge bg-warning text-dark">Middle East</span>
+                        </div>
+
+                        <p class="card-text text-muted small mb-2">
+                            <i class="fas fa-map-marker-alt me-1"></i>Wadi Musa, Jordan
+                        </p>
+
+                        <p class="card-text flex-grow-1">Ancient Nabatean city carved into rose-red rock. UNESCO World
+                            Heritage site.</p>
+                        <div class="mt-auto">
+                            <a href="view.html?slug=petra" class="btn btn-outline-primary btn-sm w-100">
+                                View Details
+                                <i class="fas fa-chevron-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col-sm-6 col-md-4" data-region="europe">
+                <article class="card h-100 destination-card">
+                    <img src="../assets/images/rome.jpg" class="card-img-top" alt="Colosseum in Rome">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title mb-0">Rome, Italy</h5>
+                            <span class="badge bg-primary">Europe</span>
+                        </div>
+
+                        <p class="card-text text-muted small mb-2">
+                            <i class="fas fa-map-marker-alt me-1"></i>Rome, Italy
+                        </p>
+
+                        <p class="card-text flex-grow-1">History, world-class food, and timeless piazzas. Ancient ruins
+                            and Renaissance art.</p>
+                        <div class="mt-auto">
+                            <a href="view.html?slug=rome" class="btn btn-outline-primary btn-sm w-100">
+                                View Details
+                                <i class="fas fa-chevron-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col-sm-6 col-md-4" data-region="europe">
+                <article class="card h-100 destination-card">
+                    <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=900&auto=format&fit=crop"
+                        class="card-img-top" alt="Eiffel Tower in Paris">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title mb-0">Paris, France</h5>
+                            <span class="badge bg-primary">Europe</span>
+                        </div>
+
+                        <p class="card-text text-muted small mb-2">
+                            <i class="fas fa-map-marker-alt me-1"></i>Paris, France
+                        </p>
+
+                        <p class="card-text flex-grow-1">The City of Light with iconic landmarks, world-class museums,
+                            and charming cafés.</p>
+                        <div class="mt-auto">
+                            <a href="view.html?slug=paris" class="btn btn-outline-primary btn-sm w-100">
+                                View Details
+                                <i class="fas fa-chevron-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col-sm-6 col-md-4" data-region="middleeast">
+                <article class="card h-100 destination-card">
+                    <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=900&auto=format&fit=crop"
+                        class="card-img-top" alt="Dubai skyline">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title mb-0">Dubai, United Arab Emirates</h5>
+                            <span class="badge bg-warning text-dark">Middle East</span>
+                        </div>
+
+                        <p class="card-text text-muted small mb-2">
+                            <i class="fas fa-map-marker-alt me-1"></i>Dubai, United Arab Emirates
+                        </p>
+
+                        <p class="card-text flex-grow-1">Futuristic skyline, luxury shopping, and desert adventures in a
+                            vibrant city.</p>
+                        <div class="mt-auto">
+                            <a href="view.html?slug=dubai" class="btn btn-outline-primary btn-sm w-100">
+                                View Details
+                                <i class="fas fa-chevron-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col-sm-6 col-md-4" data-region="europe">
+                <article class="card h-100 destination-card">
+                    <img src="https://images.unsplash.com/photo-1583422409516-2895a77efded?w=900&auto=format&fit=crop"
+                        class="card-img-top" alt="Barcelona Sagrada Familia">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title mb-0">Barcelona, Spain</h5>
+                            <span class="badge bg-primary">Europe</span>
+                        </div>
+
+                        <p class="card-text text-muted small mb-2">
+                            <i class="fas fa-map-marker-alt me-1"></i>Barcelona, Spain
+                        </p>
+
+                        <p class="card-text flex-grow-1">Gaudi's architectural masterpieces, vibrant street life, tapas
+                            culture, and Mediterranean beaches.</p>
+                        <div class="mt-auto">
+                            <a href="view.html?slug=barcelona" class="btn btn-outline-primary btn0sm w-100">
+                                View Details
+                                <i class="fas fa-chevron-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col-sm-6 col-md-4" data-region="middleeast">
+                <article class="card h-100 destination-card">
+                    <img src="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=900&auto=format&fit=crop"
+                        class="card-img-top" alt="Istanbul Hagia Sophia">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title mb-0">Istanbul, Turkey</h5>
+                            <span class="badge bg-warning text-dark">Middle East</span>
+                        </div>
+
+                        <p class="card-text text-muted small mb-2">
+                            <i class="fas fa-map-marker-alt me-1"></i>Istanbul, Turkey
+                        </p>
+
+                        <p class="card-text flex-grow-1">Where East meets West — historic mosques, bustling bazaars, and
+                            Bosphorus cruises.</p>
+
+                        <div class="mt-auto">
+                            <a href="view.html?slug=istanbul" class="btn btn-outline-primary btn-sm w-100">
+                                View Details
+                                <i class="fas fa-chevron-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col-sm-6 col-md-4" data-region="europe">
+                <article class="card h-100 destination-card">
+                    <img src="https://images.unsplash.com/photo-1605707141131-aa742dcf4671?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        class="card-img-top" alt="Athens Acropolis">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title mb-0">Athens, Greece</h5>
+                            <span class="badge bg-warning text-dark">Europe</span>
+                        </div>
+
+                        <p class="card-text text-muted small mb-2">
+                            <i class="fas fa-map-marker-alt me-1"></i>Athens, Greece
+                        </p>
+
+                        <p class="card-text flex-grow-1">The cradle of Western civilization, Athens includes ancient
+                            temples and lively neighborhoods.</p>
+
+                        <div class="mt-auto">
+                            <a href="view.html?slug=athens" class="btn btn-outline-primary btn-sm w-100">
+                                View Details <i class="fas fa-chevron-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col-sm-6 col-md-4" data-region="europe">
+                <article class="card h-100 destination-card">
+                    <img src="https://images.unsplash.com/photo-1523906921802-b5d2d899e93b?w=900&auto=format&fit=crop"
+                        class="card-img-top" alt="Venice canals">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title mb-0">Venice, Italy</h5>
+                            <span class="badge bg-primary">Europe</span>
+                        </div>
+
+                        <p class="card-text text-muted small mb-2">
+                            <i class="fas fa-map-marker-alt me-1"></i>Venice, Italy
+                        </p>
+
+                        <p class="card-text flex-grow-1">Romantic canals, historic architecture, and world-renowned art
+                            in a car-free city.</p>
+
+                        <div class="mt-auto">
+                            <a href="view.html?slug=venice" class="btn btn-outline-primary btn-sm w-100">
+                                View Details <i class="fas fa-chevron-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col-sm-6 col-md-4" data-region="europe">
+                <article class="card h-100 destination-card">
+                    <img src="https://images.unsplash.com/photo-1414862625453-d87604a607e4?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        class="card-img-top" alt="Dubrovnik old town">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title mb-0">Dubrovnik, Croatia</h5>
+                            <span class="badge bg-primary">Europe</span>
+                        </div>
+
+                        <p class="card-text text-muted small mb-2">
+                            <i class="fas fa-map-marker-alt me-1"></i>Dubrovnik, Croatia
+                        </p>
+
+                        <p class="card-text flex-grow-1">The Pearl of the Adriatic with medieval walls and crystal-clear
+                            waters.</p>
+
+                        <div class="mt-auto">
+                            <a href="view.html?slug=dubrovnik" class="btn btn-outline-primary btn-sm w-100">
+                                View Details <i class="fas fa-chevron-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col-sm-6 col-md-4" data-region="middleeast">
+                <article class="card h-100 destination-card">
+                    <img src="https://images.unsplash.com/photo-1614517453351-6c1522fc7a56?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        class="card-img-top" alt="Jerusalem Dome of the Rock">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title mb-0">Jerusalem, Israel</h5>
+                            <span class="badge bg-warning text-dark">Middle East</span>
+                        </div>
+
+                        <p class="card-text text-muted small mb-2">
+                            <i class="fas fa-map-marker-alt me-1"></i>Jerusalem, Israel
+                        </p>
+
+                        <p class="card-text flex-grow-1">Sacred city with thousands of years of history and religious
+                            significance.</p>
+
+                        <div class="mt-auto">
+                            <a href="view.html?slug=jerusalem" class="btn btn-outline-primary btn-sm w-100">
+                                View Details <i class="fas fa-chevron-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col-sm-6 col-md-4" data-region="middleeast">
+                <article class="card h-100 destination-card">
+                    <img src="https://images.unsplash.com/photo-1627933577672-d191b77baa9c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        class="card-img-top" alt="Cappadocia hot air balloons">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title mb-0">Cappadocia, Turkey</h5>
+                            <span class="badge bg-warning text-dark">Middle East</span>
+                        </div>
+
+                        <p class="card-text text-muted small mb-2">
+                            <i class="fas fa-map-marker-alt me-1"></i>Cappadocia, Turkey
+                        </p>
+
+                        <p class="card-text flex-grow-1">Fairy chimneys, cave hotels, and unforgettable hot air balloon
+                            rides at sunrise.</p>
+
+                        <div class="mt-auto">
+                            <a href="view.html?slug=cappadocia" class="btn btn-outline-primary btn-sm w-100">
+                                View Details <i class="fas fa-chevron-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <!-- yay we reached the footer -->
+    <footer class="bg-dark text-white py-4" id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 mb-3 mb-md-0">
+            <h5 class="fw-bold">
+              <i class="fas fa-plane-departure me-2"></i>Voyage en Route
+            </h5>
+            <p class="small text-white-50">Your trusted guide to exploring Europe and the Middle East. Discover, plan, and book unforgettable experiences.</p>
+          </div>
+          <div class="col-md-3 mb-3 mb-md-0">
+            <h6 class="fw-bold">Quick Links</h6>
+            <ul class="list-unstyled small">
+              <li><a href="destinations/index.html" class="text-white-50 text-decoration-none">Destinations</a></li>
+              <li><a href="bookings/create.html" class="text-white-50 text-decoration-none">Book Now</a></li>
+              <li><a href="../home.html#about" class="text-white-50 text-decoration-none">About Us</a></li>
+              <li><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+            </ul>
+          </div>
+          <div class="col-md-3">
+            <h6 class="fw-bold">Follow Us</h6>
+            <div class="d-flex gap-2">
+              <a href="#" class="text-white-50" aria-label="Facebook"><i class="fab fa-facebook fa-lg"></i></a>
+              <a href="#" class="text-white-50" aria-label="Instagram"><i class="fab fa-instagram fa-lg"></i></a>
+              <a href="#" class="text-white-50" aria-label="Twitter"><i class="fab fa-twitter fa-lg"></i></a>
+            </div>
+          </div>
+        </div>
+        <hr class="bg-white-50 my-3">
+        <div class="text-center small text-white-50">
+          &copy; 2025 Voyage en Route — Travel Guide. All rights reserved.
+        </div>
+      </div>
+    </footer>
+
+    <!-- javascript for bootstrap bcos we'll have to put apis!! -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/frontend.js"></script>
+    <script>
+        // Search and filter functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('searchInput');
+            const regionFilter = document.getElementById('regionFilter');
+            const cards = document.querySelectorAll('[data-region]');
+
+            function destfilters() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const selectedRegion = regionFilter.value;
+
+                cards.forEach(card => {
+                    const title = card.querySelector('.card-title').textContent.toLowerCase();
+                    const location = card.querySelector('.card-text').textContent.toLowerCase();
+                    const region = card.dataset.region;
+
+                    const matchesSearch = title.includes(searchTerm) || location.includes(searchTerm);
+                    const matchesRegion = selectedRegion === 'all' || region === selectedRegion;
+
+                    card.style.display = (matchesSearch && matchesRegion) ? '' : 'none';
+                });
+            }
+
+            searchInput.addEventListener('input', destfilters);
+            regionFilter.addEventListener('change', destfilters);
+        });
+    </script>
+</body>
+
+</html>

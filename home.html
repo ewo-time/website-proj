@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Explore Europe and the Middle East with curated travel guides, destinations, and easy booking.">
+    <title>Voyage en Route — Explore Europe & the Middle East</title>
+    
+    <!-- TODO: Maybe compress this image later -->
+    <link rel="preload" as="image" href="assets/images/hero-bg.jpg">
+    
+    <!-- Google Fonts - using Poppins because it looks clean -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- My custom styles -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+  </head>
+  <body>
+    <!-- Main navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold fs-4" href="home.html">
+          <i class="fas fa-plane-departure text-primary me-2"></i>Voyage en Route
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="home.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="destinations/index.html">Destinations</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="bookings/create.html">Book / Inquiry</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="bookings/check.html">Check Booking</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero section - this is the main banner area -->
+    <header class="hero text-white d-flex align-items-center" role="banner">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6 col-md-7">
+            <h1 class="display-4 fw-bold mb-3 animate-fade-in">Explore Europe & the Middle East</h1>
+            <p class="lead mb-4">Curated travel guides, top destinations, and easy booking for adventurous travelers. Discover historic cities, ancient wonders, and breathtaking landscapes.</p>
+            <div class="d-flex gap-2 flex-wrap">
+              <a href="destinations/index.html" class="btn btn-primary btn-lg px-4">
+                <i class="fas fa-compass me-2"></i>Browse Destinations
+              </a>
+              <a href="#featured" class="btn btn-outline-light btn-lg px-4">
+                <i class="fas fa-star me-2"></i>See Featured
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-5 d-none d-md-block mt-4 mt-md-0">
+            <div class="hero-image-wrapper">
+              <img src="assets/images/santorini-hero.jpg" 
+                   alt="Santorini white buildings overlooking blue sea" 
+                   class="img-fluid rounded shadow-lg"
+                   loading="eager">
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main content area -->
+    <main class="container my-5" id="featured">
+      <section>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div>
+            <h2 class="h3 mb-1">Featured Destinations</h2>
+            <p class="text-muted small mb-0">Handpicked locations for your next adventure</p>
+          </div>
+          <a href="destinations/index.html" class="text-decoration-none">
+            View all <i class="fas fa-arrow-right ms-1"></i>
+          </a>
+        </div>
+
+        <!-- Filter buttons for regions -->
+        <div class="mb-3">
+          <div class="btn-group" role="group" aria-label="Filter by region">
+            <input type="radio" class="btn-check" name="regionFilter" id="filterAll" autocomplete="off" checked>
+            <label class="btn btn-outline-primary" for="filterAll">All Regions</label>
+            
+            <input type="radio" class="btn-check" name="regionFilter" id="filterEurope" autocomplete="off">
+            <label class="btn btn-outline-primary" for="filterEurope">Europe</label>
+            
+            <input type="radio" class="btn-check" name="regionFilter" id="filterMiddleEast" autocomplete="off">
+            <label class="btn btn-outline-primary" for="filterMiddleEast">Middle East</label>
+          </div>
+        </div>
+
+        <!-- Destination cards container -->
+        <div class="row g-4 justify-content-center" id="destinationsContainer">
+          <!-- Paris card -->
+          <div class="col-sm-6 col-md-4 col-lg-3" data-region="europe">
+            <article class="card h-100 destination-card">
+              <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=900&auto=format&fit=crop" 
+                   class="card-img-top" 
+                   alt="Eiffel Tower in Paris"
+                   loading="lazy">
+              <div class="card-body d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <h5 class="card-title mb-0">Paris, France</h5>
+                  <span class="badge bg-primary">Europe</span>
+                </div>
+                <p class="card-text text-muted small mb-2">
+                  <i class="fas fa-map-marker-alt me-1"></i>Paris, France
+                </p>
+                <p class="card-text flex-grow-1">The City of Light offers iconic landmarks, world-class museums, charming cafés, and romantic Seine river walks.</p>
+                <div class="mt-auto">
+                  <a href="destinations/view.html?slug=paris" class="btn btn-outline-primary btn-sm w-100">
+                    View Details <i class="fas fa-chevron-right ms-1"></i>
+                  </a>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Dubai card -->
+          <div class="col-sm-6 col-md-4 col-lg-3" data-region="middleeast">
+            <article class="card h-100 destination-card">
+              <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=900&auto=format&fit=crop" 
+                   class="card-img-top" 
+                   alt="Dubai skyline"
+                   loading="lazy">
+              <div class="card-body d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <h5 class="card-title mb-0">Dubai, UAE</h5>
+                  <span class="badge bg-warning text-dark">Middle East</span>
+                </div>
+                <p class="card-text text-muted small mb-2">
+                  <i class="fas fa-map-marker-alt me-1"></i>Dubai, United Arab Emirates
+                </p>
+                <p class="card-text flex-grow-1">Futuristic skyscrapers, luxury shopping, desert safaris, and pristine beaches create an unforgettable experience.</p>
+                <div class="mt-auto">
+                  <a href="destinations/view.html?slug=dubai" class="btn btn-outline-primary btn-sm w-100">
+                    View Details <i class="fas fa-chevron-right ms-1"></i>
+                  </a>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Rome card -->
+          <div class="col-sm-6 col-md-4 col-lg-3" data-region="europe">
+            <article class="card h-100 destination-card">
+              <img src="assets/images/rome.jpg" 
+                   class="card-img-top" 
+                   alt="Colosseum in Rome at sunset"
+                   loading="lazy">
+              <div class="card-body d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <h5 class="card-title mb-0">Rome, Italy</h5>
+                  <span class="badge bg-primary">Europe</span>
+                </div>
+                <p class="card-text text-muted small mb-2">
+                  <i class="fas fa-map-marker-alt me-1"></i>Rome, Italy
+                </p>
+                <p class="card-text flex-grow-1">History, world-class food, and timeless piazzas. Experience ancient ruins, Renaissance art, and authentic Italian cuisine.</p>
+                <div class="mt-auto">
+                  <a href="destinations/view.html?slug=rome" class="btn btn-outline-primary btn-sm w-100">
+                    View Details <i class="fas fa-chevron-right ms-1"></i>
+                  </a>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Barcelona card -->
+          <div class="col-sm-6 col-md-4 col-lg-3" data-region="europe">
+            <article class="card h-100 destination-card">
+              <img src="https://images.unsplash.com/photo-1583422409516-2895a77efded?w=900&auto=format&fit=crop" 
+                   class="card-img-top" 
+                   alt="Barcelona Sagrada Familia"
+                   loading="lazy">
+              <div class="card-body d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <h5 class="card-title mb-0">Barcelona, Spain</h5>
+                  <span class="badge bg-primary">Europe</span>
+                </div>
+                <p class="card-text text-muted small mb-2">
+                  <i class="fas fa-map-marker-alt me-1"></i>Barcelona, Spain
+                </p>
+                <p class="card-text flex-grow-1">Gaudí's masterpieces, vibrant markets, Mediterranean beaches, and tapas culture make Barcelona a must-visit destination.</p>
+                <div class="mt-auto">
+                  <a href="destinations/view.html?slug=barcelona" class="btn btn-outline-primary btn-sm w-100">
+                    View Details <i class="fas fa-chevron-right ms-1"></i>
+                  </a>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Jerusalem card -->
+          <div class="col-sm-6 col-md-4 col-lg-3" data-region="middleeast">
+            <article class="card h-100 destination-card">
+              <img src="https://images.unsplash.com/photo-1614517453351-6c1522fc7a56?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA==" 
+                   class="card-img-top" 
+                   alt="Jerusalem Dome of the Rock"
+                   loading="lazy">
+              <div class="card-body d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <h5 class="card-title mb-0">Jerusalem, Israel</h5>
+                  <span class="badge bg-warning text-dark">Middle East</span>
+                </div>
+                <p class="card-text text-muted small mb-2">
+                  <i class="fas fa-map-marker-alt me-1"></i>Jerusalem, Israel
+                </p>
+                <p class="card-text flex-grow-1">Sacred city with thousands of years of history and religious significance across three major faiths.</p>
+                <div class="mt-auto">
+                  <a href="destinations/view.html?slug=jerusalem" class="btn btn-outline-primary btn-sm w-100">
+                    View Details <i class="fas fa-chevron-right ms-1"></i>
+                  </a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features section -->
+      <section class="my-5 py-5">
+        <h2 class="h3 text-center mb-4">Why Travel with Voyage?</h2>
+        <div class="row g-4">
+          <div class="col-md-4 text-center">
+            <div class="feature-icon mb-3">
+              <i class="fas fa-map-marked-alt fa-3x text-primary"></i>
+            </div>
+            <h3 class="h5">Curated Destinations</h3>
+            <p class="text-muted">Handpicked locations across Europe and the Middle East with detailed guides and insider tips.</p>
+          </div>
+          <div class="col-md-4 text-center">
+            <div class="feature-icon mb-3">
+              <i class="fas fa-headset fa-3x text-primary"></i>
+            </div>
+            <h3 class="h5">24/7 Support</h3>
+            <p class="text-muted">Our travel experts are available around the clock to help plan your perfect trip.</p>
+          </div>
+          <div class="col-md-4 text-center">
+            <div class="feature-icon mb-3">
+              <i class="fas fa-shield-alt fa-3x text-primary"></i>
+            </div>
+            <h3 class="h5">Safe & Secure</h3>
+            <p class="text-muted">Book with confidence knowing your information is protected and your trip is insured.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section id="about" class="my-5 py-5 bg-light shadow-sm rounded">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+              <h2 class="display-6 fw-bold mb-4">About Voyage en Route</h2>
+              <p class="lead text-muted mb-4">
+                Your Trusted Travel Companion for Unforgettable Journeys
+              </p>
+              <p class="mb-3">
+                Since our founding, Voyage en Route has been dedicated to creating extraordinary travel experiences 
+                across Europe and the Middle East. We believe that travel is more than just visiting new places—it's 
+                about discovering new cultures, creating lasting memories, and connecting with the world around us.
+              </p>
+              <p class="mb-3">
+                Our team of experienced travel experts carefully curates each destination, ensuring you have access 
+                to the best accommodations, authentic experiences, and insider knowledge that transforms a good trip 
+                into an unforgettable adventure.
+              </p>
+              <p class="mb-4">
+                Whether you're exploring ancient ruins in Petra, watching the sunset in Santorini, or wandering 
+                through the streets of Paris, we're here to make your travel dreams a reality.
+              </p>
+              <div class="d-flex gap-3">
+                <a href="destinations/index.html" class="btn btn-primary">
+                  <i class="fas fa-compass me-2"></i>Explore Destinations
+                </a>
+                <a href="bookings/create.html" class="btn btn-outline-primary">
+                  <i class="fas fa-paper-plane me-2"></i>Start Your Journey
+                </a>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="row g-3">
+                <div class="col-6">
+                  <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&auto=format&fit=crop" 
+                       alt="Travel planning" 
+                       class="img-fluid rounded shadow">
+                </div>
+                <div class="col-6 pt-5">
+                  <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=400&auto=format&fit=crop" 
+                       alt="Beautiful destination" 
+                       class="img-fluid rounded shadow">
+                </div>
+                <div class="col-12">
+                  <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                      <div class="row text-center">
+                        <div class="col-4">
+                          <h3 class="text-primary mb-0">12+</h3>
+                          <small class="text-muted">Destinations</small>
+                        </div>
+                        <div class="col-4">
+                          <h3 class="text-primary mb-0">5000+</h3>
+                          <small class="text-muted">Happy Travelers</small>
+                        </div>
+                        <div class="col-4">
+                          <h3 class="text-primary mb-0">24/7</h3>
+                          <small class="text-muted">Support</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Website footer -->
+    <footer class="bg-dark text-white py-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 mb-3 mb-md-0">
+            <h5 class="fw-bold">
+              <i class="fas fa-plane-departure me-2"></i>Voyage en Route
+            </h5>
+            <p class="small text-white-50">Your trusted guide to exploring Europe and the Middle East. Discover, plan, and book unforgettable experiences.</p>
+          </div>
+          <div class="col-md-3 mb-3 mb-md-0">
+            <h6 class="fw-bold">Quick Links</h6>
+            <ul class="list-unstyled small">
+              <li><a href="destinations/index.html" class="text-white-50 text-decoration-none">Destinations</a></li>
+              <li><a href="bookings/create.html" class="text-white-50 text-decoration-none">Book Now</a></li>
+              <li><a href="#about" class="text-white-50 text-decoration-none">About Us</a></li>
+              <li><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+            </ul>
+          </div>
+          <div class="col-md-3">
+            <h6 class="fw-bold">Follow Us</h6>
+            <div class="d-flex gap-2">
+              <a href="#" class="text-white-50" aria-label="Facebook"><i class="fab fa-facebook fa-lg"></i></a>
+              <a href="#" class="text-white-50" aria-label="Instagram"><i class="fab fa-instagram fa-lg"></i></a>
+              <a href="#" class="text-white-50" aria-label="Twitter"><i class="fab fa-twitter fa-lg"></i></a>
+            </div>
+          </div>
+        </div>
+        <hr class="bg-white-50 my-3">
+        <div class="text-center small text-white-50">
+          &copy; 2025 Voyage en Route — Travel Guide. All rights reserved.
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/app.js"></script>
+    
+    <!-- Filter functionality - wrote this quickly -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Get all the filter buttons and cards
+        const filterButtons = document.querySelectorAll('[name="regionFilter"]');
+        const destinationCards = document.querySelectorAll('[data-region]');
+        
+        // Add event listener to each filter button
+        filterButtons.forEach(function(button) {
+          button.addEventListener('change', function() {
+            // Get the selected filter value
+            const selectedFilter = this.id.replace('filter', '').toLowerCase();
+            
+            // Show/hide cards based on filter
+            destinationCards.forEach(function(card) {
+              const cardRegion = card.getAttribute('data-region');
+              
+              if (selectedFilter === 'all') {
+                // Show all cards
+                card.style.display = '';
+              } else if (cardRegion === selectedFilter) {
+                // Show matching cards
+                card.style.display = '';
+              } else {
+                // Hide non-matching cards
+                card.style.display = 'none';
+              }
+            });
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,184 @@
+/* Beige Aesthetic Theme - Enhanced Specificity */
+:root {
+  --primary: #c4a57b !important;
+  --secondary: #d4b896 !important;
+  --accent: #b8956a !important;
+  --beige-light: #f5f1e8 !important;
+  --beige-dark: #e8dcc4 !important;
+  --text-dark: #4a3f35 !important;
+  --white: #fdfcfa !important;
+  --bs-primary: #c4a57b !important;
+  --bs-primary-rgb: 196, 165, 123 !important;
+}
+
+body {
+  background: var(--beige-light) !important;
+  color: var(--text-dark) !important;
+  font-family: 'Poppins', 'Georgia', serif !important;
+}
+
+/* Navbar */
+.navbar.bg-white {
+  background: var(--white) !important;
+  border-bottom: 1px solid var(--beige-dark);
+}
+
+.navbar-brand {
+  color: var(--accent) !important;
+  font-weight: 700;
+}
+
+.nav-link {
+  color: var(--text-dark) !important;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--primary) !important;
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(135deg, rgba(196, 165, 123, 0.85), rgba(212, 184, 150, 0.85)),
+              url('../images/hero-bg.jpg') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  padding: 6rem 0 !important;
+  color: var(--text-dark) !important;
+}
+
+.hero h1 {
+  color: var(--white) !important;
+  text-shadow: 2px 2px 4px rgba(74, 63, 53, 0.3);
+}
+
+.hero .lead {
+  color: var(--white) !important;
+}
+
+.hero .btn-primary {
+  background: var(--primary) !important;
+  border: 2px solid var(--primary) !important;
+  color: var(--white) !important;
+  font-weight: 600;
+}
+
+.hero .btn-primary:hover {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(196, 165, 123, 0.4);
+}
+
+.hero .btn-outline-light {
+  border: 2px solid var(--white) !important;
+  color: var(--white) !important;
+}
+
+.hero .btn-outline-light:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: var(--white) !important;
+}
+
+/* Cards */
+.card {
+  background: var(--white) !important;
+  border: 1px solid var(--beige-dark) !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.destination-card:hover {
+  transform: translateY(-8px) !important;
+  box-shadow: 0 12px 24px rgba(196, 165, 123, 0.2) !important;
+  border-color: var(--primary) !important;
+}
+
+.card-title {
+  color: var(--text-dark) !important;
+}
+
+.badge.bg-primary {
+  background: var(--primary) !important;
+  border-color: var(--primary) !important;
+}
+
+.badge.bg-warning {
+  background: var(--secondary) !important;
+  color: var(--text-dark) !important;
+  border-color: var(--secondary) !important;
+}
+
+.btn-outline-primary {
+  border: 2px solid var(--primary) !important;
+  color: var(--primary) !important;
+  background: transparent !important;
+}
+
+.btn-outline-primary:hover {
+  background: var(--primary) !important;
+  color: var(--white) !important;
+  border-color: var(--primary) !important;
+}
+
+/* Section Headers */
+h2, h3, h4, h5, h6 {
+  color: var(--accent) !important;
+}
+
+/* Filter Buttons */
+.btn-check:checked + .btn-outline-primary {
+  background: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: var(--white) !important;
+}
+
+/* Feature Icons */
+.feature-icon i {
+  color: var(--primary) !important;
+}
+
+/* Footer */
+footer.bg-dark {
+  background: var(--beige-dark) !important;
+  color: var(--text-dark) !important;
+}
+
+footer h5, footer h6 {
+  color: var(--accent) !important;
+}
+
+footer a {
+  color: var(--text-dark) !important;
+  opacity: 0.8;
+}
+
+footer a:hover {
+  opacity: 1 !important;
+  color: var(--primary) !important;
+}
+
+/* Text Muted Override */
+.text-muted {
+  color: #7a6f5d !important;
+}
+
+.text-white-50 {
+  color: rgba(74, 63, 53, 0.6) !important;
+}
+
+/* Links */
+a:not(.btn):not(.nav-link):not(.navbar-brand) {
+  color: var(--primary) !important;
+  text-decoration: none;
+}
+
+a:not(.btn):not(.nav-link):not(.navbar-brand):hover {
+  color: var(--accent) !important;
+}
+
+/* Card Images */
+.card-img-top {
+  height: 220px;
+  object-fit: cover;
+  border-bottom: 1px solid var(--beige-dark);
+}

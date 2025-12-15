@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Book your travel experience or send us an inquiry.">
+    <title>Book / Inquiry — Voyage en Route</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="../assets/css/styles.css">
+  </head>
+  <body>
+    <!-- Sticky Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold fs-4" href="../home.html">
+          <i class="fas fa-plane-departure text-primary me-2"></i>Voyage en Route
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="../home.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../destinations/index.html">Destinations</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="create.html">Book / Inquiry</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="check.html">Check Booking</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../home.html#about">About</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="bg-light py-5">
+      <div class="container">
+        <h1 class="display-5 fw-bold mb-2">Book Your Adventure</h1>
+        <p class="lead text-muted">Fill out the form below and we'll get back to you shortly</p>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container my-5">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <!-- Alert Container -->
+          <div id="formAlert"></div>
+
+          <!-- Booking Form -->
+          <div class="card shadow-sm">
+            <div class="card-body p-4">
+              <form id="bookingForm" action="process-booking.php" method="POST" novalidate>
+                <div class="row g-3">
+                  <!-- Personal Information -->
+                  <div class="col-12">
+                    <h5 class="mb-3"><i class="fas fa-user me-2"></i>Personal Information</h5>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="name" class="form-label">Full Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                    <div class="invalid-feedback">Please provide your name.</div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                    <div class="invalid-feedback">Please provide a valid email.</div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="phone" class="form-label">Phone Number</label>
+                    <input type="tel" class="form-control" id="phone" name="phone">
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="destination" class="form-label">Interested Destination</label>
+                    <select class="form-select" id="destination" name="destination">
+                      <option value="">Select a destination</option>
+                      <option value="santorini">Santorini, Greece</option>
+                      <option value="petra">Petra, Jordan</option>
+                      <option value="rome">Rome, Italy</option>
+                      <option value="paris">Paris, France</option>
+                      <option value="dubai">Dubai, United Arab Emirates</option>
+                      <option value="barcelona">Barcelona, Spain</option>
+                      <option value="istanbul">Istanbul, Turkey</option>
+                      <option value="athens">Athens, Greece</option>
+                      <option value="venice">Venice, Italy</option>
+                      <option value="dubrovnik">Dubrovnik, Croatia</option>
+                      <option value="jerusalem">Jerusalem, Israel</option>
+                      <option value="cappadocia">Cappadocia, Turkey</option>
+                    </select>
+                  </div>
+
+                  <!-- Travel Details -->
+                  <div class="col-12 mt-4">
+                    <h5 class="mb-3"><i class="fas fa-calendar-alt me-2"></i>Travel Details</h5>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="checkin" class="form-label">Preferred Start Date</label>
+                    <input type="date" class="form-control" id="checkin" name="checkin">
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="checkout" class="form-label">Preferred End Date</label>
+                    <input type="date" class="form-control" id="checkout" name="checkout">
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="guests" class="form-label">Number of Travelers</label>
+                    <input type="number" class="form-control" id="guests" name="guests" min="1" value="1">
+                  </div>
+
+                  <!-- Message -->
+                  <div class="col-12 mt-4">
+                    <h5 class="mb-3"><i class="fas fa-comment me-2"></i>Additional Information</h5>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="message" class="form-label">Message / Special Requests</label>
+                    <textarea class="form-control" id="message" name="message" rows="4" placeholder="Tell us about your travel preferences, questions, or special requests..."></textarea>
+                  </div>
+
+                  <!-- Submit Button -->
+                  <div class="col-12 mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg w-100">
+                      <i class="fas fa-paper-plane me-2"></i>Send Inquiry
+                    </button>
+                  </div>
+
+                  <div class="col-12">
+                    <p class="small text-muted text-center mb-0">
+                      <i class="fas fa-lock me-1"></i>Your information is secure and will not be shared with third parties.
+                    </p>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Contact Info -->
+          <div class="card mt-4">
+            <div class="card-body">
+              <h5 class="card-title">Needing assistance with your booking?</h5>
+              <p class="card-text">Our travel experts are available 24/7 to assist you.</p>
+              <div class="row text-center">
+                <div class="col-md-4">
+                  <i class="fas fa-phone fa-2x text-primary mb-2"></i>
+                  <p class="small mb-0">+63 (917) 123 4567</p>
+                </div>
+                <div class="col-md-4">
+                  <i class="fas fa-envelope fa-2x text-primary mb-2"></i>
+                  <p class="small mb-0">help@vnrtravels.com</p>
+                </div>
+                <div class="col-md-4">
+                  <i class="fas fa-clock fa-2x text-primary mb-2"></i>
+                  <p class="small mb-0">24/7 Support</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4" id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 mb-3 mb-md-0">
+            <h5 class="fw-bold">
+              <i class="fas fa-plane-departure me-2"></i>Voyage en Route
+            </h5>
+            <p class="small text-white-50">Your trusted guide to exploring Europe and the Middle East. Discover, plan, and book unforgettable experiences.</p>
+          </div>
+          <div class="col-md-3 mb-3 mb-md-0">
+            <h6 class="fw-bold">Quick Links</h6>
+            <ul class="list-unstyled small">
+              <li><a href="destinations/index.html" class="text-white-50 text-decoration-none">Destinations</a></li>
+              <li><a href="bookings/create.html" class="text-white-50 text-decoration-none">Book Now</a></li>
+              <li><a href="../home.html#about" class="text-white-50 text-decoration-none">About Us</a></li>
+              <li><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+            </ul>
+          </div>
+          <div class="col-md-3">
+            <h6 class="fw-bold">Follow Us</h6>
+            <div class="d-flex gap-2">
+              <a href="#" class="text-white-50" aria-label="Facebook"><i class="fab fa-facebook fa-lg"></i></a>
+              <a href="#" class="text-white-50" aria-label="Instagram"><i class="fab fa-instagram fa-lg"></i></a>
+              <a href="#" class="text-white-50" aria-label="Twitter"><i class="fab fa-twitter fa-lg"></i></a>
+            </div>
+          </div>
+        </div>
+        <hr class="bg-white-50 my-3">
+        <div class="text-center small text-white-50">
+          &copy; 2025 Voyage en Route — Travel Guide. All rights reserved.
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/frontend.js"></script>
+    <script>
+      // Form validation
+      document.getElementById('bookingForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        if (!this.checkValidity()) {
+          e.stopPropagation();
+          this.classList.add('was-validated');
+          return;
+        }
+
+        // Show success message
+        const alert = document.getElementById('formAlert');
+        alert.innerHTML = '<div class="alert alert-success alert-dismissible fade show"><i class="fas fa-check-circle me-2"></i>Thank you! Your inquiry has been received. We\'ll contact you shortly.<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>';
+        
+        // Reset form
+        this.reset();
+        this.classList.remove('was-validated');
+        
+        // Scroll to alert
+        alert.scrollIntoView({ behavior: 'smooth' });
+      });
+    </script>
+  </body>
+</html>
