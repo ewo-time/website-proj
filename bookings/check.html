@@ -21,61 +21,27 @@
     <link rel="stylesheet" href="../assets/css/styles.css">
     
     <style>
-      .booking-search-card {
-        max-width: 600px;
-        margin: 0 auto;
+      .login-container {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
       
-      .booking-details-card {
-        border: 2px solid var(--primary);
-        border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      }
-      
-      .status-badge {
-        font-size: 0.9rem;
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-      }
-      
-      .status-confirmed {
-        background-color: #d4edda;
-        color: #155724;
-      }
-      
-      .status-pending {
-        background-color: #fff3cd;
-        color: #856404;
-      }
-      
-      .status-cancelled {
-        background-color: #f8d7da;
-        color: #721c24;
-      }
-      
-      .info-row {
-        padding: 0.75rem 0;
-        border-bottom: 1px solid #eee;
-      }
-      
-      .info-row:last-child {
-        border-bottom: none;
-      }
-      
-      .info-label {
-        font-weight: 600;
-        color: var(--text-dark);
+      .login-card {
+        max-width: 450px;
+        width: 100%;
       }
     </style>
   </head>
   <body>
-    <!-- Sticky Navigation -->
+    <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
       <div class="container">
         <a class="navbar-brand fw-bold fs-4" href="../home.html">
           <i class="fas fa-plane-departure text-primary me-2"></i>Voyage en Route
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -90,7 +56,7 @@
               <a class="nav-link" href="create.html">Book / Inquiry</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="check.html">Check Booking</a>
+              <a class="nav-link active" aria-current="page" href="check.html">Customer Login</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="../home.html#about">About</a>
@@ -100,226 +66,63 @@
       </div>
     </nav>
 
-    <!-- Page Header -->
-    <header class="bg-light py-5">
-      <div class="container text-center">
-        <h1 class="display-5 fw-bold mb-2">
-          <i class="fas fa-search text-primary me-3"></i>Check My Booking
-        </h1>
-        <p class="lead text-muted">Enter your booking details to view your reservation</p>
-      </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="container my-5">
-      <!-- Search Form Section -->
-      <div id="searchSection" class="booking-search-card">
-        <div class="card shadow-sm">
-          <div class="card-body p-4">
-            <h3 class="card-title mb-4 text-center">
-              <i class="fas fa-ticket-alt text-primary me-2"></i>Find Your Booking
-            </h3>
-            
-            <form id="bookingSearchForm">
-              <div class="mb-3">
-                <label for="bookingReference" class="form-label">
-                  <i class="fas fa-barcode me-2"></i>Booking Reference Number
-                </label>
-                <input 
-                  type="text" 
-                  class="form-control form-control-lg" 
-                  id="bookingReference" 
-                  placeholder="e.g., VER-2025-ABC123"
-                  required
-                  pattern="[A-Z]{3}-[0-9]{4}-[A-Z0-9]{6}"
-                  title="Format: VER-2025-ABC123"
-                >
-                <div class="form-text">Format: VER-YYYY-XXXXXX</div>
-              </div>
-              
-              <div class="mb-4">
-                <label for="email" class="form-label">
-                  <i class="fas fa-envelope me-2"></i>Email Address
-                </label>
-                <input 
-                  type="email" 
-                  class="form-control form-control-lg" 
-                  id="email" 
-                  placeholder="your.email@example.com"
-                  required
-                >
-                <div class="form-text">Enter the email you used when booking</div>
-              </div>
-              
-              <button type="submit" class="btn btn-primary btn-lg w-100">
-                <i class="fas fa-search me-2"></i>Search Booking
-              </button>
-            </form>
-            
-            <div class="text-center mt-4">
-              <p class="text-muted small mb-2">
-                <i class="fas fa-info-circle me-1"></i>
-                Your booking reference was sent to your email
-              </p>
-              <a href="create.html" class="text-decoration-none">
-                <i class="fas fa-plus-circle me-1"></i>Make a New Booking
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Booking Details Section (Hidden by default) -->
-      <div id="bookingDetailsSection" class="d-none">
+    <!-- Login Form -->
+    <div class="login-container">
+      <div class="container">
         <div class="row justify-content-center">
-          <div class="col-lg-8">
-            <div class="card booking-details-card mb-4">
-              <div class="card-header bg-primary text-white py-3">
-                <div class="d-flex justify-content-between align-items-center">
-                  <h4 class="mb-0">
-                    <i class="fas fa-file-alt me-2"></i>Booking Details
-                  </h4>
-                  <span class="status-badge status-confirmed" id="bookingStatus">Confirmed</span>
+          <div class="col-md-6">
+            <div class="card shadow login-card">
+              <div class="card-body p-5">
+                <div class="text-center mb-4">
+                  <i class="fas fa-user-circle text-primary" style="font-size: 4rem;"></i>
+                  <h2 class="mt-3">Customer Login</h2>
+                  <p class="text-muted">Access your booking details</p>
+                </div>
+
+                <form id="customerLoginForm" action="login-process.php" method="GET">
+                  <div class="mb-4">
+                    <label for="email" class="form-label">
+                      <i class="fas fa-envelope me-2"></i>Email Address
+                    </label>
+                    <input type="email" class="form-control form-control-lg" id="email" name="email"placeholder="your.email@example.com" required>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="password" class="form-label">
+                      <i class="fas fa-barcode me-2"></i>Password
+                    </label>
+                    <input 
+                      type="text" 
+                      class="form-control form-control-lg" 
+                      id="password"
+                      name="password"
+                      placeholder="Enter your password"
+                      required
+                    >
+                  </div>
+
+                  <button type="submit" class="btn btn-primary btn-lg w-100">
+                    <i class="fas fa-sign-in-alt me-2"></i>Login
+                  </button>
+                </form>
+
+                <hr class="my-4">
+
+                <div class="text-center">
+                  <p class="small text-muted mb-2">
+                    <i class="fas fa-info-circle me-1"></i>
+                    Don't have a booking yet?
+                  </p>
+                  <a href="create.html" class="btn btn-outline-secondary">
+                    <i class="fas fa-plus-circle me-2"></i>Create New Booking
+                  </a>
                 </div>
               </div>
-              
-              <div class="card-body p-4">
-                <!-- Booking Reference -->
-                <div class="info-row">
-                  <div class="row">
-                    <div class="col-4 info-label">
-                      <i class="fas fa-barcode text-primary me-2"></i>Reference
-                    </div>
-                    <div class="col-8" id="displayReference">VER-2025-ABC123</div>
-                  </div>
-                </div>
-                
-                <!-- Traveler Name -->
-                <div class="info-row">
-                  <div class="row">
-                    <div class="col-4 info-label">
-                      <i class="fas fa-user text-primary me-2"></i>Traveler Name
-                    </div>
-                    <div class="col-8" id="displayName">John Doe</div>
-                  </div>
-                </div>
-                
-                <!-- Email -->
-                <div class="info-row">
-                  <div class="row">
-                    <div class="col-4 info-label">
-                      <i class="fas fa-envelope text-primary me-2"></i>Email
-                    </div>
-                    <div class="col-8" id="displayEmail">john@example.com</div>
-                  </div>
-                </div>
-                
-                <!-- Phone -->
-                <div class="info-row">
-                  <div class="row">
-                    <div class="col-4 info-label">
-                      <i class="fas fa-phone text-primary me-2"></i>Phone
-                    </div>
-                    <div class="col-8" id="displayPhone">+1 234 567 8900</div>
-                  </div>
-                </div>
-                
-                <!-- Destination -->
-                <div class="info-row">
-                  <div class="row">
-                    <div class="col-4 info-label">
-                      <i class="fas fa-map-marker-alt text-primary me-2"></i>Destination
-                    </div>
-                    <div class="col-8">
-                      <a href="#" id="displayDestination" class="text-decoration-none">Santorini, Greece</a>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- Travel Dates -->
-                <div class="info-row">
-                  <div class="row">
-                    <div class="col-4 info-label">
-                      <i class="fas fa-calendar-alt text-primary me-2"></i>Travel Dates
-                    </div>
-                    <div class="col-8" id="displayDates">Jan 15, 2025 - Jan 22, 2025</div>
-                  </div>
-                </div>
-                
-                <!-- Number of Travelers -->
-                <div class="info-row">
-                  <div class="row">
-                    <div class="col-4 info-label">
-                      <i class="fas fa-users text-primary me-2"></i>Travelers
-                    </div>
-                    <div class="col-8" id="displayTravelers">2 Adults</div>
-                  </div>
-                </div>
-                
-                <!-- Special Requests -->
-                <div class="info-row">
-                  <div class="row">
-                    <div class="col-4 info-label">
-                      <i class="fas fa-comment text-primary me-2"></i>Special Requests
-                    </div>
-                    <div class="col-8" id="displayRequests">Honeymoon package</div>
-                  </div>
-                </div>
-                
-                <!-- Booking Date -->
-                <div class="info-row">
-                  <div class="row">
-                    <div class="col-4 info-label">
-                      <i class="fas fa-clock text-primary me-2"></i>Booked On
-                    </div>
-                    <div class="col-8" id="displayBookingDate">Dec 15, 2025</div>
-                  </div>
-                </div>
-              </div>
-              
-              <!-- Action Buttons -->
-              <div class="card-footer bg-light p-3">
-                <div class="d-flex flex-wrap gap-2 justify-content-center">
-                  <button class="btn btn-outline-primary" onclick="window.print()">
-                    <i class="fas fa-print me-2"></i>Print Confirmation
-                  </button>
-                  <button class="btn btn-outline-secondary" id="resendEmailBtn">
-                    <i class="fas fa-envelope me-2"></i>Resend Email
-                  </button>
-                  <button class="btn btn-outline-info" id="modifyBookingBtn">
-                    <i class="fas fa-edit me-2"></i>Modify Booking
-                  </button>
-                  <button class="btn btn-outline-danger" id="cancelBookingBtn">
-                    <i class="fas fa-times-circle me-2"></i>Cancel Booking
-                  </button>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Back Button -->
-            <div class="text-center">
-              <button class="btn btn-secondary" id="searchAgainBtn">
-                <i class="fas fa-arrow-left me-2"></i>Search Another Booking
-              </button>
             </div>
           </div>
         </div>
       </div>
-
-      <!-- Error Message (Hidden by default) -->
-      <div id="errorSection" class="d-none">
-        <div class="alert alert-danger text-center" role="alert">
-          <i class="fas fa-exclamation-triangle me-2"></i>
-          <strong>Booking Not Found</strong>
-          <p class="mb-0 mt-2">Please check your booking reference and email address and try again.</p>
-        </div>
-        <div class="text-center">
-          <button class="btn btn-primary" id="tryAgainBtn">
-            <i class="fas fa-redo me-2"></i>Try Again
-          </button>
-        </div>
-      </div>
-    </main>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-dark text-white py-4" id="about">
@@ -335,7 +138,7 @@
             <h6 class="fw-bold">Quick Links</h6>
             <ul class="list-unstyled small">
               <li><a href="destinations/index.html" class="text-white-50 text-decoration-none">Destinations</a></li>
-              <li><a href="bookings/create.html" class="text-white-50 text-decoration-none">Book Now</a></li>
+              <li><a href="create.html" class="text-white-50 text-decoration-none">Book Now</a></li>
               <li><a href="../home.html#about" class="text-white-50 text-decoration-none">About Us</a></li>
               <li><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
             </ul>

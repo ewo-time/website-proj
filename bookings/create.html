@@ -70,7 +70,7 @@
           <!-- Booking Form -->
           <div class="card shadow-sm">
             <div class="card-body p-4">
-              <form id="bookingForm" action="process-booking.php" method="POST" novalidate>
+              <form id="bookingForm" action="process-booking.php" method="POST">
                 <div class="row g-3">
                   <!-- Personal Information -->
                   <div class="col-12">
@@ -87,6 +87,12 @@
                     <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
                     <input type="email" class="form-control" id="email" name="email" required>
                     <div class="invalid-feedback">Please provide a valid email.</div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                    <div class="invalid-feedback">Please provide a strong password.</div>
                   </div>
 
                   <div class="col-md-6">
@@ -152,7 +158,7 @@
 
                   <div class="col-12">
                     <p class="small text-muted text-center mb-0">
-                      <i class="fas fa-lock me-1"></i>Your information is secure and will not be shared with third parties.
+                      <i class="fas fa-lock me-1"></i>Your information is secure and will not be shared with third parties. By sending a inquiry, you also create an account to check your bookings and its' status on our system.
                     </p>
                   </div>
                 </div>
@@ -220,12 +226,35 @@
       </div>
     </footer>
 
+    <!-- Success/Error Modal -->
+    <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header" id="modalHeader">
+            <h5 class="modal-title" id="bookingModalLabel">
+              <i class="fas fa-check-circle me-2"></i>Booking Status
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="modalBody">
+            <!-- Content will be inserted here -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <a href="check.html" class="btn btn-primary" id="checkBookingBtn" style="display:none;">
+              <i class="fas fa-search me-2"></i>Check My Booking
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/frontend.js"></script>
     <script>
-      // Form validation
-      document.getElementById('bookingForm').addEventListener('submit', function(e) {
+      // Form submission with AJAX
+      document.getElementById('bookingForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         
         if (!this.checkValidity()) {
@@ -234,16 +263,113 @@
           return;
         }
 
-        // Show success message
-        const alert = document.getElementById('formAlert');
-        alert.innerHTML = '<div class="alert alert-success alert-dismissible fade show"><i class="fas fa-check-circle me-2"></i>Thank you! Your inquiry has been received. We\'ll contact you shortly.<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>';
+        // Get form data
+        const formData = new FormData(this);
         
-        // Reset form
-        this.reset();
-        this.classList.remove('was-validated');
-        
-        // Scroll to alert
-        alert.scrollIntoView({ behavior: 'smooth' });
+        // Show loading state
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processing...';
+
+        try {
+          // Send data to PHP
+          const response = await fetch('process-booking.php', {
+            method: 'POST',
+            body: formData
+          });
+
+          const result = await response.json();
+
+          // Show modal with result
+          const modal = new bootstrap.Modal(document.getElementById('bookingModal'));
+          const modalHeader = document.getElementById('modalHeader');
+          const modalBody = document.getElementById('modalBody');
+          const checkBookingBtn = document.getElementById('checkBookingBtn');
+
+          if (result.success) {
+            // Success
+            modalHeader.className = 'modal-header bg-success text-white';
+            modalHeader.querySelector('.modal-title').innerHTML = '<i class="fas fa-check-circle me-2"></i>Booking Successful!';
+            
+            modalBody.innerHTML = `
+              <div class="text-center">
+                <i class="fas fa-check-circle text-success" style="font-size: 4rem;"></i>
+                <h4 class="mt-3">Thank you, ${result.name}!</h4>
+                <p class="text-muted">Your booking has been received successfully.</p>
+                
+                <div class="alert alert-info mt-3">
+                  <h5 class="alert-heading">Your Booking Reference</h5>
+                  <h2 class="mb-0 text-primary fw-bold">${result.booking_reference}</h2>
+                  <hr>
+                  <p class="mb-0 small">
+                    <i class="fas fa-info-circle me-1"></i>
+                    Save this reference number to check your booking status later.
+                  </p>
+                </div>
+                
+                <div class="text-start mt-3">
+                  <p class="mb-1"><strong>Name:</strong> ${result.name}</p>
+                  <p class="mb-1"><strong>Email:</strong> ${result.email}</p>
+                  ${result.destination ? `<p class="mb-1"><strong>Destination:</strong> ${result.destination}</p>` : ''}
+                  <p class="mb-0"><strong>Status:</strong> <span class="badge bg-warning text-dark">Pending Review</span></p>
+                </div>
+                
+                <p class="small text-muted mt-3">
+                  <i class="fas fa-envelope me-1"></i>
+                  A confirmation will be sent to ${result.email}
+                </p>
+              </div>
+            `;
+            
+            checkBookingBtn.style.display = 'inline-block';
+            
+            // Reset form
+            this.reset();
+            this.classList.remove('was-validated');
+            
+          } else {
+            // Error
+            modalHeader.className = 'modal-header bg-danger text-white';
+            modalHeader.querySelector('.modal-title').innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Booking Failed';
+            
+            modalBody.innerHTML = `
+              <div class="text-center">
+                <i class="fas fa-exclamation-triangle text-danger" style="font-size: 4rem;"></i>
+                <h4 class="mt-3">Oops! Something went wrong</h4>
+                <p class="text-muted">${result.message}</p>
+                <p class="small">Please try again or contact support if the problem persists.</p>
+              </div>
+            `;
+            
+            checkBookingBtn.style.display = 'none';
+          }
+
+          modal.show();
+
+        } catch (error) {
+          // Network or other error
+          const modal = new bootstrap.Modal(document.getElementById('bookingModal'));
+          const modalHeader = document.getElementById('modalHeader');
+          const modalBody = document.getElementById('modalBody');
+          
+          modalHeader.className = 'modal-header bg-danger text-white';
+          modalHeader.querySelector('.modal-title').innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Connection Error';
+          
+          modalBody.innerHTML = `
+            <div class="text-center">
+              <i class="fas fa-wifi text-danger" style="font-size: 4rem;"></i>
+              <h4 class="mt-3">Connection Failed</h4>
+              <p class="text-muted">Unable to reach the server. Please check your internet connection and try again.</p>
+            </div>
+          `;
+          
+          modal.show();
+        } finally {
+          // Restore button
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnText;
+        }
       });
     </script>
   </body>
