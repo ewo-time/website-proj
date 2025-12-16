@@ -41,9 +41,10 @@ $confirmedCount = 0;
 $cancelledCount = 0;
 
 foreach ($bookings as $booking) {
-    if ($booking['STATUS'] === 'Pending') $pendingCount++;
-    elseif ($booking['STATUS'] === 'Confirmed') $confirmedCount++;
-    elseif ($booking['STATUS'] === 'Cancelled') $cancelledCount++;
+    $status = strtolower(trim($booking['STATUS']));
+    if ($status === 'pending') $pendingCount++;
+    elseif ($status === 'confirmed') $confirmedCount++;
+    elseif ($status === 'cancelled') $cancelledCount++;
 }
 
 sqlsrv_close($conn);
