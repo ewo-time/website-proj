@@ -39,13 +39,16 @@
               <a class="nav-link" href="../destinations/index.html">Destinations</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="create.html">Book / Inquiry</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="check.html">Check Booking</a>
+              <a class="nav-link active" aria-current="page" href="create.html">Create an Inquiry</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="../home.html#about">About</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link active px-3 py-2 rounded" aria-current="page" href="../bookings/check.html" style="background: linear-gradient(135deg, #c4a57b 0%, #a08968 100%); color: white !important; font-weight: 600;">
+                <i class="fas fa-sign-in-alt me-1"></i>Login
+              </a>
             </li>
           </ul>
         </div>
@@ -192,36 +195,55 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white py-4" id="about">
+    <footer class="text-white py-5" style="background: linear-gradient(135deg, #c4a57b 0%, #a08968 50%, #2c3e50 100%);">
       <div class="container">
-        <div class="row">
-          <div class="col-md-6 mb-3 mb-md-0">
-            <h5 class="fw-bold">
+        <div class="row g-4">
+          <div class="col-lg-5 col-md-6">
+            <h5 class="fw-bold mb-3">
               <i class="fas fa-plane-departure me-2"></i>Voyage en Route
             </h5>
-            <p class="small text-white-50">Your trusted guide to exploring Europe and the Middle East. Discover, plan, and book unforgettable experiences.</p>
-          </div>
-          <div class="col-md-3 mb-3 mb-md-0">
-            <h6 class="fw-bold">Quick Links</h6>
-            <ul class="list-unstyled small">
-              <li><a href="destinations/index.html" class="text-white-50 text-decoration-none">Destinations</a></li>
-              <li><a href="bookings/create.html" class="text-white-50 text-decoration-none">Book Now</a></li>
-              <li><a href="../home.html#about" class="text-white-50 text-decoration-none">About Us</a></li>
-              <li><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
-            </ul>
-          </div>
-          <div class="col-md-3">
-            <h6 class="fw-bold">Follow Us</h6>
-            <div class="d-flex gap-2">
-              <a href="#" class="text-white-50" aria-label="Facebook"><i class="fab fa-facebook fa-lg"></i></a>
-              <a href="#" class="text-white-50" aria-label="Instagram"><i class="fab fa-instagram fa-lg"></i></a>
-              <a href="#" class="text-white-50" aria-label="Twitter"><i class="fab fa-twitter fa-lg"></i></a>
+            <p class="small" style="opacity: 0.9; line-height: 1.8;">Your trusted guide to exploring Europe and the Middle East. We craft unforgettable travel experiences with curated destinations and personalized service.</p>
+            <div class="d-flex gap-3 mt-3">
+              <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+              <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="social-link" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
             </div>
           </div>
+          <div class="col-lg-3 col-md-6">
+            <h6 class="fw-bold mb-3">Explore</h6>
+            <ul class="list-unstyled small footer-links">
+              <li class="mb-2"><a href="destinations/index.html" style="color: rgba(255,255,255,0.8);">Destinations</a></li>
+              <li class="mb-2"><a href="bookings/create.html" style="color: rgba(255,255,255,0.8);">Book Now</a></li>
+              <li class="mb-2"><a href="../home.html#about" style="color: rgba(255,255,255,0.8);">About Us</a></li>
+              <li class="mb-2"><a href="#contact" style="color: rgba(255,255,255,0.8);">Contact</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <h6 class="fw-bold mb-3">Contact Us</h6>
+            <ul class="list-unstyled small">
+              <li class="mb-2" style="opacity: 0.9;">
+                <i class="fas fa-map-marker-alt me-2"></i>Silang, Cavite
+              </li>
+              <li class="mb-2" style="opacity: 0.9;">
+                <i class="fas fa-phone me-2"></i>+63 (917) 123 4567
+              </li>
+              <li class="mb-2" style="opacity: 0.9;">
+                <i class="fas fa-envelope me-2"></i>help@vnrtravels.com
+              </li>
+              <li class="mb-2" style="opacity: 0.9;">
+                <i class="fas fa-clock me-2"></i>24/7 Support
+              </li>
+            </ul>
+          </div>
         </div>
-        <hr class="bg-white-50 my-3">
-        <div class="text-center small text-white-50">
-          &copy; 2025 Voyage en Route — Travel Guide. All rights reserved.
+        <hr style="border-color: rgba(255,255,255,0.2); margin: 2.5rem 0 1.5rem;">
+        <div class="row align-items-center">
+          <div class="col-md-6 text-center text-md-start">
+            <p class="small mb-0" style="opacity: 0.8;">
+              &copy; 2025 Voyage en Route. All rights reserved.
+            </p>
+          </div>
         </div>
       </div>
     </footer>
