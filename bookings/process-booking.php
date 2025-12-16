@@ -96,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
         // Send confirmation email via SendGrid API (non-blocking)
         $emailSent = false;
         try {
-            $sendgridApiKey = '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'; // Replace with your actual API key
+            $sendgridApiKey = 'API_key_here'; // Replace with your actual API key
             $url = 'https://api.sendgrid.com/v3/mail/send';
             
             $subject = "Booking Confirmation - Voyage en Route (Reference: $book_ref)";

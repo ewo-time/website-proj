@@ -90,7 +90,7 @@ try {
     $booking = sqlsrv_fetch_array($detailStmt, SQLSRV_FETCH_ASSOC);
 
     if ($booking) {
-        $sendgridApiKey = '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'; // Replace with your actual API key
+        $sendgridApiKey = 'API_key_here'; // Replace with your actual API key
         $url = 'https://api.sendgrid.com/v3/mail/send';
         
         $subject = "Booking $newStatus - Voyage en Route (Reference: $bookingRef)";
