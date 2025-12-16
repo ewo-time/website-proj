@@ -21,16 +21,26 @@ if ($conn === false) {
     die("Database connection failed: " . print_r(sqlsrv_errors(), true));
 }
 
-// Get all bookings
-$sql = "SELECT * FROM VNR_BOOKINGS ORDER BY DATE_OF_CREATION DESC";
-$stmt = sqlsrv_query($conn, $sql);
+// Get all bookings with payment information
+$admin_sql = "SELECT books.*, 
+        pays.PAYMENT_METHOD, 
+        pays.CARD_TYPE, 
+        pays.CARD_LF, 
+        pays.PAYMENT_AMOUNT, 
+        pays.PAYMENT_STATUS AS PAYMENT_STATUS_DETAIL, 
+        pays.TRANSACTION_ID,
+        pays.PAYMENT_DATE
+        FROM VNR_BOOKINGS books
+        LEFT OUTER JOIN VNR_PAYMENTS pays ON books.VNR_ID = pays.VNR_ID
+        ORDER BY books.DATE_OF_CREATION DESC";
+$admin_qry = sqlsrv_query($conn, $admin_sql);
 
-if ($stmt === false) {
+if ($admin_qry === false) {
     die("Query failed: " . print_r(sqlsrv_errors(), true));
 }
 
 $bookings = [];
-while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+while ($row = sqlsrv_fetch_array($admin_qry, SQLSRV_FETCH_ASSOC)) {
     $bookings[] = $row;
 }
 
@@ -49,6 +59,13 @@ foreach ($bookings as $booking) {
 
 sqlsrv_close($conn);
 ?>
+
+
+
+
+
+
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -204,6 +221,9 @@ sqlsrv_close($conn);
                   <th>Destination</th>
                   <th>Check-in</th>
                   <th>Guests</th>
+                  <th>Amount</th>
+                  <th>Payment</th>
+                  <th>Transaction ID</th>
                   <th>Status</th>
                   <th class="text-center">Actions</th>
                 </tr>
@@ -211,7 +231,7 @@ sqlsrv_close($conn);
               <tbody>
                 <?php if (empty($bookings)): ?>
                 <tr>
-                  <td colspan="8" class="text-center py-5 text-muted">
+                  <td colspan="11" class="text-center py-5 text-muted">
                     <i class="fas fa-inbox fa-3x mb-3 d-block"></i>
                     No bookings found
                   </td>
@@ -225,6 +245,29 @@ sqlsrv_close($conn);
                     <td><?php echo $booking['DESTINATION'] ? htmlspecialchars($booking['DESTINATION']) : '<span class="text-muted">Not specified</span>'; ?></td>
                     <td><?php echo $booking['CHECKIN_DATE'] ? $booking['CHECKIN_DATE']->format('M j, Y') : '<span class="text-muted">N/A</span>'; ?></td>
                     <td><?php echo $booking['GUESTS']; ?></td>
+                    <td class="fw-bold text-success">
+                      <?php echo $booking['TOTAL_AMOUNT'] ? '$' . number_format($booking['TOTAL_AMOUNT'], 2) : '<span class="text-muted">N/A</span>'; ?>
+                    </td>
+                    <td>
+                      <small>
+                        <?php if ($booking['PAYMENT_METHOD']): ?>
+                          <strong><?php echo htmlspecialchars($booking['PAYMENT_METHOD']); ?></strong><br>
+                          <?php if ($booking['CARD_TYPE']): ?>
+                            <?php echo htmlspecialchars($booking['CARD_TYPE']); ?> 
+                            <?php if ($booking['CARD_LF']): ?>
+                              ****<?php echo htmlspecialchars($booking['CARD_LF']); ?>
+                            <?php endif; ?>
+                          <?php endif; ?>
+                        <?php else: ?>
+                          <span class="text-muted">N/A</span>
+                        <?php endif; ?>
+                      </small>
+                    </td>
+                    <td>
+                      <small class="font-monospace">
+                        <?php echo $booking['TRANSACTION_ID'] ? htmlspecialchars($booking['TRANSACTION_ID']) : '<span class="text-muted">N/A</span>'; ?>
+                      </small>
+                    </td>
                     <td>
                       <?php
                       $statusClass = 'warning';

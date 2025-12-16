@@ -21,25 +21,58 @@ if ($conn === false) {
     die("Database connection failed: " . print_r(sqlsrv_errors(), true));
 }
 
-// Get customer's booking
+// Get customer's booking with payment information
 $email = $_SESSION['customer_email'];
-$sql = "SELECT * FROM VNR_BOOKINGS WHERE EMAIL = '$email'";
-$stmt = sqlsrv_query($conn, $sql);
+$dash_sql = "SELECT books.*, 
+        pays.PAYMENT_METHOD, 
+        pays.CARD_TYPE, 
+        pays.CARD_LF, 
+        pays.PAYMENT_AMOUNT, 
+        pays.PAYMENT_STATUS AS PAYMENT_STATUS_DETAIL, 
+        pays.TRANSACTION_ID,
+        pays.PAYMENT_DATE
+        FROM VNR_BOOKINGS AS books
+        LEFT OUTER JOIN VNR_PAYMENTS pays ON books.VNR_ID = pays.VNR_ID
+        WHERE books.EMAIL = '$email'";
+$dash_qry = sqlsrv_query($conn, $dash_sql);
 
-if ($stmt === false) {
+if ($dash_qry === false) {
     die("Query failed: " . print_r(sqlsrv_errors(), true));
 }
 
-$booking = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
-
+$booking = sqlsrv_fetch_array($dash_qry, SQLSRV_FETCH_ASSOC);
 if (!$booking) {
     die("Booking not found.");
 }
+
+// Destination mapping (matches create.html)
+$destinationNames = [
+    'santorini' => 'Santorini, Greece',
+    'petra' => 'Petra, Jordan',
+    'rome' => 'Rome, Italy',
+    'paris' => 'Paris, France',
+    'dubai' => 'Dubai, United Arab Emirates',
+    'barcelona' => 'Barcelona, Spain',
+    'istanbul' => 'Istanbul, Turkey',
+    'athens' => 'Athens, Greece',
+    'venice' => 'Venice, Italy',
+    'dubrovnik' => 'Dubrovnik, Croatia',
+    'jerusalem' => 'Jerusalem, Israel',
+    'cappadocia' => 'Cappadocia, Turkey'
+];
 
 // Format dates for display
 $checkinDate = $booking['CHECKIN_DATE'] ? $booking['CHECKIN_DATE']->format('F j, Y') : 'Not specified';
 $checkoutDate = $booking['CHECKOUT_DATE'] ? $booking['CHECKOUT_DATE']->format('F j, Y') : 'Not specified';
 $createdAt = $booking['DATE_OF_CREATION'] ? $booking['DATE_OF_CREATION']->format('F j, Y g:i A') : 'Unknown';
+
+// Get full destination name
+$destinationDisplay = 'Not specified';
+if ($booking['DESTINATION']) {
+    $destinationDisplay = isset($destinationNames[$booking['DESTINATION']]) 
+        ? $destinationNames[$booking['DESTINATION']] 
+        : htmlspecialchars($booking['DESTINATION']);
+}
 
 // Status badge color
 $statusClass = 'warning';
@@ -51,6 +84,14 @@ if ($booking['STATUS'] === 'Confirmed') {
 
 sqlsrv_close($conn);
 ?>
+
+
+
+
+
+
+
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -176,7 +217,7 @@ sqlsrv_close($conn);
               <div class="row g-3">
                 <div class="col-md-12">
                   <label class="small text-muted">Destination</label>
-                  <p class="mb-0 fw-bold fs-5"><?php echo $booking['DESTINATION'] ? htmlspecialchars($booking['DESTINATION']) : 'Not specified'; ?></p>
+                  <p class="mb-0 fw-bold fs-5"><?php echo $destinationDisplay; ?></p>
                 </div>
                 <div class="col-md-6">
                   <label class="small text-muted">Check-in Date</label>
@@ -186,6 +227,63 @@ sqlsrv_close($conn);
                   <label class="small text-muted">Check-out Date</label>
                   <p class="mb-0 fw-bold"><?php echo $checkoutDate; ?></p>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment Details -->
+          <div class="card shadow-sm mb-4">
+            <div class="card-header bg-white">
+              <h5 class="mb-0"><i class="fas fa-credit-card me-2 text-primary"></i>Payment Information</h5>
+            </div>
+            <div class="card-body">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="small text-muted">Total Amount</label>
+                  <p class="mb-0 fw-bold fs-4 text-success">
+                    $<?php echo number_format($booking['TOTAL_AMOUNT'], 2); ?>
+                  </p>
+                </div>
+                <div class="col-md-6">
+                  <label class="small text-muted">Payment Status</label>
+                  <p class="mb-0">
+                    <span class="badge bg-success fs-6 px-3 py-2">
+                      <?php echo htmlspecialchars($booking['PAYMENT_STATUS']); ?>
+                    </span>
+                  </p>
+                </div>
+                <div class="col-md-6">
+                  <label class="small text-muted">Payment Method</label>
+                  <p class="mb-0 fw-bold">
+                    <?php echo $booking['PAYMENT_METHOD'] ? htmlspecialchars($booking['PAYMENT_METHOD']) : 'Not available'; ?>
+                  </p>
+                </div>
+                <div class="col-md-6">
+                  <label class="small text-muted">Card Type</label>
+                  <p class="mb-0 fw-bold">
+                    <?php echo $booking['CARD_TYPE'] ? htmlspecialchars($booking['CARD_TYPE']) : 'N/A'; ?>
+                  </p>
+                </div>
+                <div class="col-md-6">
+                  <label class="small text-muted">Card Number</label>
+                  <p class="mb-0 fw-bold">
+                    <?php echo $booking['CARD_LF'] ? '**** **** **** ' . htmlspecialchars($booking['CARD_LF']) : 'N/A'; ?>
+                  </p>
+                </div>
+                <div class="col-md-6">
+                  <label class="small text-muted">Transaction ID</label>
+                  <p class="mb-0 fw-bold font-monospace small">
+                    <?php echo $booking['TRANSACTION_ID'] ? htmlspecialchars($booking['TRANSACTION_ID']) : 'N/A'; ?>
+                  </p>
+                </div>
+                <?php if ($booking['PAYMENT_DATE']): ?>
+                <div class="col-md-12">
+                  <label class="small text-muted">Payment Date</label>
+                  <p class="mb-0 fw-bold">
+                    <?php echo $booking['PAYMENT_DATE']->format('F j, Y g:i A'); ?>
+                  </p>
+                </div>
+                <?php endif; ?>
               </div>
             </div>
           </div>
